@@ -2,6 +2,9 @@ using UnityEngine;
 
 public class DucklingButtons : MonoBehaviour
 {
+    public GameObject egg;
+    public Transform eggSpawnPos;
+    [Space(10)]
     public GameObject food;
     public GameObject water;
     public GameObject karate;
@@ -39,6 +42,12 @@ public class DucklingButtons : MonoBehaviour
 
         Vector2 spawnPosition = new Vector2(spawnX, spawnY);
         var clone = Instantiate(karate, spawnPosition, Quaternion.identity);
+        clone.gameObject.SetActive(true);
+    }
+
+    public void BuyEgg()
+    {
+        var clone = Instantiate(egg, eggSpawnPos.position, Quaternion.identity);
         clone.gameObject.SetActive(true);
     }
 }

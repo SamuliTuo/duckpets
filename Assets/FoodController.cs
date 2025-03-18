@@ -6,6 +6,7 @@ public class FoodController : MonoBehaviour
     {
         if (collision.CompareTag("Duck"))
         {
+            collision.GetComponent<DuckController>().Ate();
             Destroy(gameObject);
         }
     }

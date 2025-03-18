@@ -85,7 +85,6 @@ public class DuckController : MonoBehaviour
 
             default: break;
         }
-        
     }
 
     public float jumpForce = 10;
@@ -143,4 +142,9 @@ public class DuckController : MonoBehaviour
     //        rb.AddForce(Vector2.right * moveForce * Time.deltaTime, ForceMode2D.Impulse);
     //    }
     //}
+
+    public void Ate()
+    {
+        transform.localScale = new Vector3(transform.localScale.x + 0.1f, transform.localScale.y + 0.1f, 1);
+    }
 }
