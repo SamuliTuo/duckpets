@@ -7,11 +7,15 @@ public enum DuckActions
 
 public class DuckController : MonoBehaviour
 {
+    public GameObject duck2;
+
     public float moveForce = 10;
     [Header("Min and max values:")]
     public Vector2 idleTime = Vector2.zero;
     public Vector2 moveTime = Vector2.zero;
     public Vector2 jumpTime = Vector2.zero;
+    public Vector2 jumpForce = Vector2.zero;
+    public float jumpForceHorizontalMax = 5;
 
     private SpriteRenderer spriteRenderer;
     private Animator anim;
@@ -36,6 +40,7 @@ public class DuckController : MonoBehaviour
             return;
         }
         UpdateAction();
+        Grow();
     }
 
     void AI_chooseAction()
@@ -68,7 +73,7 @@ public class DuckController : MonoBehaviour
 
             case 2: // Jump
                 currentAction = DuckActions.JUMP;
-                rb.AddForce(Vector3.up * jumpForce, ForceMode2D.Impulse);
+                rb.AddForce(Vector3.up * Random.Range(jumpForce.x, jumpForce.y), ForceMode2D.Impulse);
                 float randomX = Random.Range(-jumpForceHorizontalMax, jumpForceHorizontalMax);
                 rb.AddForce(Vector3.right * randomX, ForceMode2D.Impulse);
                 if (randomX < 0)
@@ -87,8 +92,6 @@ public class DuckController : MonoBehaviour
         }
     }
 
-    public float jumpForce = 10;
-    public float jumpForceHorizontalMax = 5.00f;
     void UpdateAction()
     {
         switch (currentAction)
@@ -120,6 +123,30 @@ public class DuckController : MonoBehaviour
     void UpdateJump()
     {
 
+    }
+
+    float growT = 0;
+    public float growTimeToNextStage = 5;
+    void Grow()
+    {
+        if (growT < growTimeToNextStage)
+        {
+            print("growing "+growT);
+            growT += Time.deltaTime;
+            if (growT >= growTimeToNextStage)
+            {
+                GrowToNextStage();
+            }
+        }
+    }
+
+    void GrowToNextStage()
+    {   
+        print("grow to next stg");
+        GetComponent<Collider2D>().isTrigger = true;
+        var clone = Instantiate(duck2, transform.position, Quaternion.identity);
+        clone.gameObject.SetActive(true);
+        Destroy(gameObject);
     }
 
     //void Move()
